@@ -1,0 +1,24 @@
+li{
+    list-style-type: none;
+}
+#main-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+li>button{
+    background-color: rgb(199, 199, 202);
+}
+ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+}
+.blueborder{
+    border:2px solid rgb(219, 150, 24);
+}
+.normal{
+    border:0px;
+}

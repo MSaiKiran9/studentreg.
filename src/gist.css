@@ -4,4 +4,55 @@
     font-size: 0.5rem;
     margin: 0.4rem 0.4rem;
     background-color: rgb(123, 27, 27);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+label{
+    color: rgb(71, 71, 71);
+    padding:1rem 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+input{
+    background-color: transparent;
+    border-radius: 0.4rem;
+    color: black;
+    font-size: 1rem;
+}
+#sub{
+    font-size: 1.4rem;
+    color: rgb(99, 99, 99);
+}
+h1{
+    text-align: center;
+}
+select{
+    background-color: rgb(89, 89, 91);
+    padding:0.3rem;
+    font-size: 1rem;
+    
+}
+form{
+    padding:0.5rem 0rem ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0.5rem 0rem;
+}
+
+#span1{
+color: red;
+font-size: 1.5rem;
+}
+#submit{
+    margin-top: 1rem;
+}
+form>div>#innerformele{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
 }

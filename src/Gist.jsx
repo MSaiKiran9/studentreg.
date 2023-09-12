@@ -114,6 +114,7 @@ const MyForm = () => {
 
     return (
         <form onSubmit={formik.handleSubmit}>
+            <h1>2-1</h1>
             <div className={`form-group ${formik.touched.name && formik.errors.name ? 'error' : ''}`}>
                 <label htmlFor="name">Name:</label>
                 <input
@@ -185,10 +186,10 @@ const MyForm = () => {
             </div>
 
             <div className={`form-group ${formik.touched.subjects && formik.errors.subjects ? 'error' : ''}`}>
-                <p>Subjects:</p>
+                <p id='sub'>Subjects:</p>
                 {subjectOptions[formik.values.branch]?.map((subject) => (
-                    <div key={subject}>
-                        <label htmlFor={`subjects.${subject}.branch`}>{subject} Branch:</label>
+                    <div id='innerformele' key={subject}>
+                        <label htmlFor={`subjects.${subject}.branch`}><span id='span1'>{subject}</span> - Branch:</label>
                         <select
                             id={`subjects.${subject}.branch`}
                             name={`subjects.${subject}.branch`}
@@ -236,8 +237,7 @@ const MyForm = () => {
                     </div>
                 ))}
             </div>
-
-            <button type="submit">Submit</button>
+            <button id='submit' type="submit">Submit</button>
         </form>
     );
 };

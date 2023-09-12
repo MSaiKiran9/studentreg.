@@ -5,10 +5,26 @@
   flex-direction: column;
   width: 100vw;
   height: 100vh;
-  flex-wrap: wrap;
   border: 2px solid blue;
   padding: 0;
   margin: 0;
+  background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+  overflow-y: scroll;
+  padding:1rem;
 }
 
-h1 {}
+h1 {
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  background-image: linear-gradient(to left, #ed8936, #ed64a6);
+   /* ... */
+
+  /* set the color of the text to transparent */
+  color: transparent;
+
+  /* we need to clip the gradient background so that
+  so only the text bit will have the gradient background
+  (otherwise the entire rectangle the text is in would have it) */
+  -webkit-background-clip: text;
+  background-clip: text;
+}
