@@ -1,0 +1,7 @@
+.error-box{
+    /* border:1px solid red; */
+    box-sizing: border-box;
+    font-size: 0.5rem;
+    margin: 0.4rem 0.4rem;
+    background-color: rgb(123, 27, 27);
+}
