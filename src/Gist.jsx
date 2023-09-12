@@ -3,23 +3,36 @@ import { useFormik } from 'formik';
 import './gist.css'
 
 
+
 const MyForm = () => {
     const formik = useFormik({
         initialValues: {
             name: '',
             rollNo: '',
             email: '',
+            branch: '',
             subjects: {
-                'DBMS': '',
-                'OS': '',
-                'TOC': '',
-                'CN': '',
+                sub1: {
+                    branch: '',
+                    teacher: '',
+                },
+                sub2: {
+                    branch: '',
+                    teacher: '',
+                },
+                sub3: {
+                    branch: '',
+                    teacher: '',
+                },
+                sub4: {
+                    branch: '',
+                    teacher: '',
+                },
             },
         },
         validate: (values) => {
             const errors = {};
 
-            // Validate that name, rollNo, and email are not empty
             if (!values.name) {
                 errors.name = 'Name is required';
             }
@@ -31,22 +44,73 @@ const MyForm = () => {
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
                 errors.email = 'Invalid email address';
             }
+            if (!values.branch) {
+                errors.branch = 'Branch is required';
+            }
 
-            // Validate that each subject has a selected teacher
             Object.keys(values.subjects).forEach((subject) => {
-                if (!values.subjects[subject]) {
+                if (!values.subjects[subject].branch) {
                     errors.subjects = errors.subjects || {};
-                    errors.subjects[subject] = 'Please select a teacher';
+                    errors.subjects[subject] = {
+                        ...errors.subjects[subject],
+                        branch: 'Branch is required',
+                    };
+                }
+                if (!values.subjects[subject].teacher) {
+                    errors.subjects = errors.subjects || {};
+                    errors.subjects[subject] = {
+                        ...errors.subjects[subject],
+                        teacher: 'Teacher is required',
+                    };
                 }
             });
 
             return errors;
         },
         onSubmit: (values) => {
-            // Handle form submission here
+            if (values.rollNo.length != 10) {
+                alert("Roll number can't be less than 10");
+            }
             console.log(values);
         },
     });
+
+    const branchOptions = ['CSE', 'IT', 'EEE', 'ECE', 'MECH'];
+
+    const subjectOptions = {
+        CSE: ['sub1', 'sub2', 'sub3', 'sub4'],
+        IT: ['sub4', 'sub5', 'sub6', 'sub7'],
+        EEE: ['sub8', 'sub9', 'sub10', 'sub11'],
+        ECE: ['sub12', 'sub13', 'sub14', 'sub15'],
+        MECH: ['sub16', 'sub17', 'sub18', 'sub19'],
+    };
+
+    const teacherOptions = {
+        CSE: [
+            'Dr. B.Sateesh Kumar (HOD)',
+            'Dr. T.Venugopal',
+            'Dr. S.Viswanadha Raju',
+            'Sri. M.Uday Kumar',
+            'Sri. P.Sreenivasa Rao',
+            'Mr. O.Raju',
+            'Mr. T.Venkatesh',
+            'Mrs. A.Anusha',
+        ],
+        IT: ['Teacher IT1', 'Teacher IT2', 'Teacher IT3'],
+        EEE: ['Teacher EEE1', 'Teacher EEE2', 'Teacher EEE3'],
+        ECE: ['Teacher ECE1', 'Teacher ECE2', 'Teacher ECE3'],
+        MECH: ['Teacher MECH1', 'Teacher MECH2', 'Teacher MECH3'],
+    };
+
+    const handleBranchChange = (event) => {
+        const selectedBranch = event.target.value;
+        formik.setFieldValue('branch', selectedBranch);
+
+        Object.keys(formik.values.subjects).forEach((subject) => {
+            formik.setFieldValue(`subjects.${subject}.branch`, '');
+            formik.setFieldValue(`subjects.${subject}.teacher`, '');
+        });
+    };
 
     return (
         <form onSubmit={formik.handleSubmit}>
@@ -98,26 +162,75 @@ const MyForm = () => {
                 ) : null}
             </div>
 
+            <div className={`form-group ${formik.touched.branch && formik.errors.branch ? 'error' : ''}`}>
+                <label htmlFor="branch">Branch:</label>
+                <select
+                    id="branch"
+                    name="branch"
+                    onChange={handleBranchChange}
+                    value={formik.values.branch}
+                >
+                    <option value="">Select a branch</option>
+                    {branchOptions.map((branch) => (
+                        <option key={branch} value={branch}>
+                            {branch}
+                        </option>
+                    ))}
+                </select>
+                {formik.touched.branch && formik.errors.branch ? (
+                    <div className="error-box">
+                        <div className="error">{formik.errors.branch}</div>
+                    </div>
+                ) : null}
+            </div>
+
             <div className={`form-group ${formik.touched.subjects && formik.errors.subjects ? 'error' : ''}`}>
                 <p>Subjects:</p>
-                {Object.keys(formik.values.subjects).map((subject) => (
+                {subjectOptions[formik.values.branch]?.map((subject) => (
                     <div key={subject}>
-                        <label htmlFor={`subjects.${subject}`}>{subject}:</label>
+                        <label htmlFor={`subjects.${subject}.branch`}>{subject} Branch:</label>
                         <select
-                            id={`subjects.${subject}`}
-                            name={`subjects.${subject}`}
+                            id={`subjects.${subject}.branch`}
+                            name={`subjects.${subject}.branch`}
                             onChange={formik.handleChange}
-                            value={formik.values.subjects[subject]}
+                            value={formik.values.subjects[subject]?.branch || ''}
+                        >
+                            <option value="">Select a branch</option>
+                            {branchOptions.map((branch) => (
+                                <option key={branch} value={branch}>
+                                    {branch}
+                                </option>
+                            ))}
+                        </select>
+                        {formik.touched.subjects &&
+                            formik.errors.subjects &&
+                            formik.errors.subjects[subject] &&
+                            formik.errors.subjects[subject].branch ? (
+                            <div className="error-box">
+                                <div className="error">{formik.errors.subjects[subject].branch}</div>
+                            </div>
+                        ) : null}
+
+                        <label htmlFor={`subjects.${subject}.teacher`}>Teacher:</label>
+                        <select
+                            id={`subjects.${subject}.teacher`}
+                            name={`subjects.${subject}.teacher`}
+                            onChange={formik.handleChange}
+                            value={formik.values.subjects[subject]?.teacher || ''}
                         >
                             <option value="">Select a teacher</option>
-                            <option value="Teacher 1">Teacher 1</option>
-                            <option value="Teacher 2">Teacher 2</option>
-                            <option value="Teacher 3">Teacher 3</option>
-                            <option value="Teacher 4">Teacher 4</option>
+                            {teacherOptions[formik.values.subjects[subject]?.branch]?.map((teacher) => (
+                                <option key={teacher} value={teacher}>
+                                    {teacher}
+                                </option>
+                            ))}
                         </select>
-                        {formik.touched.subjects && formik.errors.subjects && formik.errors.subjects[subject] ? (
+                        {formik.touched.subjects &&
+                            formik.errors.subjects &&
+                            formik.errors.subjects[subject] &&
+                            formik.errors.subjects[subject].teacher ? (
                             <div className="error-box">
-                                <div className="error">{formik.errors.subjects[subject]}</div>
+                                <div className="error">{formik.errors.subjects[subject].teacher}</div>
                             </div>
                         ) : null}
                     </div>
