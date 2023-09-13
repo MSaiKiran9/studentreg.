@@ -22,8 +22,13 @@ input{
     font-size: 1rem;
 }
 #sub{
-    font-size: 1.4rem;
+    font-size: 2rem;
     color: rgb(99, 99, 99);
+background-image: linear-gradient(to left, #c7a385, #a56283);
+color: transparent;
+font-weight: bold;
+-webkit-background-clip: text;
+background-clip: text;
 }
 h1{
     text-align: center;
@@ -32,7 +37,7 @@ select{
     background-color: rgb(89, 89, 91);
     padding:0.3rem;
     font-size: 1rem;
-    
+    margin:0rem 0.5rem;
 }
 form{
     padding:0.5rem 0rem ;
@@ -44,8 +49,26 @@ form{
 }
 
 #span1{
-color: red;
+/* color: rgb(48, 94, 219); */
 font-size: 1.5rem;
+background-image: linear-gradient(to left, #c7a385, #a56283);
+/* ... */
+
+/* set the color of the text to transparent */
+color: transparent;
+
+/* we need to clip the gradient background so that
+so only the text bit will have the gradient background
+(otherwise the entire rectangle the text is in would have it) */
+-webkit-background-clip: text;
+background-clip: text;
+float: left;
+left: 0px;
+width: 100%;
+}
+#span1-outer{
+display: block;
+width: 100%;
 }
 #submit{
     margin-top: 1rem;

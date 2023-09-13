@@ -48,27 +48,28 @@ const MyForm = () => {
                 errors.branch = 'Branch is required';
             }
 
-            Object.keys(values.subjects).forEach((subject) => {
-                if (!values.subjects[subject].branch) {
-                    errors.subjects = errors.subjects || {};
-                    errors.subjects[subject] = {
-                        ...errors.subjects[subject],
-                        branch: 'Branch is required',
-                    };
+            Object.keys(values.subjects).forEach((subjectKey) => {
+                const subject = values.subjects[subjectKey];
+                const subjectErrors = {};
+
+                if (!subject.branch) {
+                    subjectErrors.branch = 'Branch is required';
                 }
-                if (!values.subjects[subject].teacher) {
+                if (!subject.teacher) {
+                    subjectErrors.teacher = 'Teacher is required';
+                }
+
+                if (Object.keys(subjectErrors).length > 0) {
                     errors.subjects = errors.subjects || {};
-                    errors.subjects[subject] = {
-                        ...errors.subjects[subject],
-                        teacher: 'Teacher is required',
-                    };
+                    errors.subjects[subjectKey] = subjectErrors;
                 }
             });
 
             return errors;
         },
         onSubmit: (values) => {
-            if (values.rollNo.length != 10) {
+            alert("subimmited");
+            if (values.rollNo.length !== 10) {
                 alert("Roll number can't be less than 10");
             }
             console.log(values);
@@ -78,11 +79,11 @@ const MyForm = () => {
     const branchOptions = ['CSE', 'IT', 'EEE', 'ECE', 'MECH'];
 
     const subjectOptions = {
-        CSE: ['sub1', 'sub2', 'sub3', 'sub4'],
-        IT: ['sub4', 'sub5', 'sub6', 'sub7'],
-        EEE: ['sub8', 'sub9', 'sub10', 'sub11'],
-        ECE: ['sub12', 'sub13', 'sub14', 'sub15'],
-        MECH: ['sub16', 'sub17', 'sub18', 'sub19'],
+        CSE: ['Digital Electronics', 'Data Structures', 'Computer Oriented Statistical Methods', 'Computer Organisation and Architechture', 'Object Oriented Programming through Java', 'Data Structures Lab', 'Object Oriented Programming through Java Lab', 'Data Visualization-R Programming/ Power BI', 'Gender Sensitization Lab'],
+        IT: ['Digital Electronics', 'Data Structures', 'Computer Oriented Statistical Methods', 'Computer Organization and Microprocessor', 'Introduction to IoT', 'Digital Electronics Lab', 'Data Structures Lab', 'Internet Of Things Lab', 'Data Visualization - R Programming/ Power BI', 'Gender Sensitization Lab'],
+        EEE: ['Sub8', 'Sub9', 'Sub10', 'Sub11'],
+        ECE: ['Numberical Methods and Complex Variables', 'Analog Circuits', 'Network Analysis and Synthesis', 'Digital Logic Design', 'Signals and Systems', 'Analog Circuits Lab', 'Digital Logic Design Lab', 'Basic Simulation Lab', 'Constitution of India'],
+        MECH: ['Probability, Statistics & Complex Variables', 'Mechanics Of Solids', 'Metallurgy & Material Science', 'Production Technology', 'Thermodynamics', 'Production Technology Lab', 'Material Science & Mechanics of Solids Lab', 'Computer Aided Machine Drawing', 'Constitution Of India'],
     };
 
     const teacherOptions = {
@@ -106,9 +107,9 @@ const MyForm = () => {
         const selectedBranch = event.target.value;
         formik.setFieldValue('branch', selectedBranch);
 
-        Object.keys(formik.values.subjects).forEach((subject) => {
-            formik.setFieldValue(`subjects.${subject}.branch`, '');
-            formik.setFieldValue(`subjects.${subject}.teacher`, '');
+        Object.keys(formik.values.subjects).forEach((subjectKey) => {
+            formik.setFieldValue(`subjects.${subjectKey}.branch`, '');
+            formik.setFieldValue(`subjects.${subjectKey}.teacher`, '');
         });
     };
 
@@ -185,18 +186,18 @@ const MyForm = () => {
                 ) : null}
             </div>
 
-            <div className={`form-group ${formik.touched.subjects && formik.errors.subjects ? 'error' : ''}`}>
-                <p id='sub'>Subjects:</p>
+            <div className={`form-group ${Object.keys(formik.errors.subjects || {}).length > 0 ? 'error' : ''}`}>
+                <p id="sub">Subjects:</p>
                 {subjectOptions[formik.values.branch]?.map((subject) => (
-                    <div id='innerformele' key={subject}>
-                        <label htmlFor={`subjects.${subject}.branch`}><span id='span1'>{subject}</span> - Branch:</label>
+                    <div id="innerformele" key={subject}>
+                        <label id="span1-outer" htmlFor={`subjects.${subject}.branch`}><span id="span1">{subject}</span></label>
                         <select
                             id={`subjects.${subject}.branch`}
                             name={`subjects.${subject}.branch`}
                             onChange={formik.handleChange}
                             value={formik.values.subjects[subject]?.branch || ''}
                         >
-                            <option value="">Select a branch</option>
+                            <option value="">Select Teacher's Branch</option>
                             {branchOptions.map((branch) => (
                                 <option key={branch} value={branch}>
                                     {branch}
@@ -211,15 +212,13 @@ const MyForm = () => {
                                 <div className="error">{formik.errors.subjects[subject].branch}</div>
                             </div>
                         ) : null}
-
-                        <label htmlFor={`subjects.${subject}.teacher`}>Teacher:</label>
                         <select
                             id={`subjects.${subject}.teacher`}
                             name={`subjects.${subject}.teacher`}
                             onChange={formik.handleChange}
                             value={formik.values.subjects[subject]?.teacher || ''}
                         >
-                            <option value="">Select a teacher</option>
+                            <option value="">Select The Teacher Name</option>
                             {teacherOptions[formik.values.subjects[subject]?.branch]?.map((teacher) => (
                                 <option key={teacher} value={teacher}>
                                     {teacher}
@@ -237,7 +236,7 @@ const MyForm = () => {
                     </div>
                 ))}
             </div>
-            <button id='submit' type="submit">Submit</button>
+            <button id="submit" type="submit">Submit</button>
         </form>
     );
 };
