@@ -79,3 +79,11 @@ form>div>#innerformele{
     justify-content: center;
     flex-direction: row;
 }
+#success{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: rgb(58, 220, 120);
+}

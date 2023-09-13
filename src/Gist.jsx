@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import './gist.css'
 const MyForm = () => {
+    const [displayFormorSuccess, setDisplayFormorSuccess] = useState(true);
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -43,6 +44,9 @@ const MyForm = () => {
             if (!values.branch) {
                 errors.branch = 'Branch is required';
             }
+            if (values.rollNo.length != 10) {
+                errors.branch = "Roll number length must be 10";
+            }
             Object.keys(values.subjects).forEach((subject) => {
                 if (!values.subjects[subject].branch) {
                     errors.subjects = errors.subjects || {};
@@ -62,10 +66,8 @@ const MyForm = () => {
             return errors;
         },
         onSubmit: (values) => {
-            if (values.rollNo.length != 10) {
-                alert("Roll number can't be less than 10");
-            }
             console.log(values);
+            setDisplayFormorSuccess(false);
         },
     });
     const branchOptions = ['CSE', 'IT', 'EEE', 'ECE', 'MECH'];
@@ -102,7 +104,7 @@ const MyForm = () => {
     };
 
     return (
-        <form onSubmit={formik.handleSubmit}>
+        displayFormorSuccess == true ? <form onSubmit={formik.handleSubmit}>
             <h1>2-1</h1>
             <div className={`form-group ${formik.touched.name && formik.errors.name ? 'error' : ''}`}>
                 <label htmlFor="name">Name:</label>
@@ -220,7 +222,7 @@ const MyForm = () => {
                 </div>
                 ))}
             </div><button id='submit' type="submit">Submit</button>
-        </form>
+        </form> : <div id='success'>Form Submitted!,<br />Confirmation email sent to your email</div>
     );
 };
 
