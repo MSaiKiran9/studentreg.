@@ -11,3 +11,4 @@ Currently, two official plugins are available:
 - 1. npm install
   2. npm run dev
   to get started
+-follow vite documentation to deploy the final front-end code
