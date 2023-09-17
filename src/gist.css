@@ -128,3 +128,75 @@ color:rgb(228, 89, 119);
   text-align: center;
   font-weight: bold;
  }
+
+
+
+
+
+
+ /* css for success  */
+
+.success-message {
+    display: flex;
+    align-items: center;
+    background-color: #dff0d8;
+    border: 1px solid #d0e9c6;
+    border-radius: 4px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.success-icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+}
+
+.success-content {
+    color: #3c763d;
+}
+
+.success-heading {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.success-description {
+    font-size: 18px;
+}
+
+
+
+/* css for error */
+
+.error-message {
+  display: flex;
+  align-items: center;
+  background-color: #f2dede;
+  border: 1px solid #ebccd1;
+  border-radius: 4px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.error-icon {
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+}
+
+.error-content {
+  color: #a94442;
+}
+
+.error-heading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.error-description {
+  font-size: 18px;
+}
+

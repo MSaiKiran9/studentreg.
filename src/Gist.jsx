@@ -236,7 +236,25 @@ const MyForm = () => {
 
             </div>
             <button id='submit' type="submit">Submit</button>
-        </form> : displayFormorSuccess === 1 ? <div id='success'>Form Submitted!,<br />Confirmation email sent to your email</div> : <div id='showerr'>Form Didn't Sent! {trackError}</div>
+        </form> : displayFormorSuccess === 1 ? (<div class="success-message">
+
+            <div class="success-content">
+                <div class="success-heading">Form Successfully Submitted!</div>
+                <div class="success-description">
+                    Thank you for submitting the form. A confirmation email has been sent to your email address.
+                </div>
+            </div>
+        </div>)
+            : (<div class="error-message">
+                <div class="error-content">
+                    <div class="error-heading">Submission Unsuccessful !</div>
+                    <div class="error-description">
+                        The form could not be submitted. Please ensure that your credentials are correct and try again.
+
+                    </div>
+                </div>
+            </div>
+            )
     );
 };
 
